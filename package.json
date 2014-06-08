@@ -1,0 +1,55 @@
+{
+  "name": "glsl-lut",
+  "version": "1.0.0",
+  "description": "lookup table color transforms for glslify",
+  "main": "index.js",
+  "license": "MIT",
+  "author": "Matt DesLauriers <dave.des@gmail.com>",
+  "dependencies": {},
+  "devDependencies": {
+    "tape": "~2.13.2",
+    "gl-now": "~1.3.1",
+    "gl-context": "~0.1.0",
+    "gl-texture2d": "~1.0.1",
+    "a-big-triangle": "0.0.0",
+    "lena": "~1.0.0",
+    "glslify": "~1.4.0"
+  },
+  "scripts": {
+    "test": "tape test.js",
+    "dev": "beefy index.js --cwd example --live",
+    "dist": "browserify example/index.js -o example/static/bundle.js"
+  },
+  "browserify": {
+    "transform": [
+      "glslify"
+    ]
+  },
+  "testling": {
+    "files": "test.js",
+    "browsers": [
+      "ie/6..latest",
+      "chrome/22..latest",
+      "firefox/16..latest",
+      "safari/latest",
+      "opera/11.0..latest",
+      "iphone/6",
+      "ipad/6",
+      "android-browser/latest"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mattdesl/glsl-lut.git"
+  },
+  "keywords": [
+    "glslify glsl lut lookup table color transform matrix rgb rgba filter instagram curves"
+  ],
+  "homepage": "https://github.com/mattdesl/glsl-lut",
+  "bugs": {
+    "url": "https://github.com/mattdesl/glsl-lut/issues"
+  },
+  "directories": {
+    "example": "example"
+  }
+}
