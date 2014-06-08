@@ -42,14 +42,31 @@
     "type": "git",
     "url": "git://github.com/mattdesl/glsl-lut.git"
   },
-  "keywords": [
-    "glslify glsl lut lookup table color transform matrix rgb rgba filter instagram curves"
-  ],
   "homepage": "https://github.com/mattdesl/glsl-lut",
   "bugs": {
     "url": "https://github.com/mattdesl/glsl-lut/issues"
   },
   "directories": {
     "example": "example"
-  }
+  },
+  "keywords": [
+    "glslify",
+    "glsl",
+    "webgl",
+    "shader",
+    "color",
+    "transform",
+    "lookup",
+    "table",
+    "lut",
+    "instagram",
+    "filter",
+    "curves",
+    "brightness",
+    "contrast",
+    "saturation",
+    "hue",
+    "levels",
+    "grayscale"
+  ]
 }
