@@ -1,6 +1,8 @@
 # glsl-lut [![unstable](http://badges.github.io/stability-badges/dist/unstable.svg)](http://github.com/badges/stability-badges)
 
-![ABTest](http://i.imgur.com/IrgPRO2.png)
+[![ABTest](http://i.imgur.com/IrgPRO2.png)](http://mattdesl.github.io/glsl-lut/example/miss_etikate.html)
+
+[Demo here](http://mattdesl.github.io/glsl-lut/example/miss_etikate.html)
 
 Allows you to use a lookup table to apply color transform in a shader. Original implementation from GPUImage, see [here](http://liovch.blogspot.ca/2012/07/add-instagram-like-effects-to-your-ios.html). For more details on the concept, see [here](http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter24.html).
 
@@ -26,7 +28,7 @@ uniform sampler2D uLookup;
 	gl_FragColor = transform(original, uLookup);
 ```
 
-## inverted lookup
+## Flipped Y Lookup
 
 Depending on your environment, the Y texture coordinate may need to be inverted during the lookup to get the correct color output. If your colours look messed up, this is most likely the case. Require the inverted function like so:
 
@@ -34,7 +36,7 @@ Depending on your environment, the Y texture coordinate may need to be inverted 
 #pragma glslify: transform = require(glsl-lut/flipY)
 ```
 
-## defines
+## Defines
 
 Requiring `glsl-lut/flipY` is the same as making a define for `LUT_FLIP_Y`. You can also define `LUT_NO_CLAMP` before requiring the function and the incoming texture color will not have a `clamp(c, 0.0, 1.0)` operation applied. This may be useful if you plan to take advantage of hardware texture wrapping. 
 
