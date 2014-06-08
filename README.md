@@ -1,5 +1,3 @@
-#[![browser support](https://ci.testling.com/mattdesl/glsl-lut.png)](https://ci.testling.com/mattdesl/glsl-lut)
-
 # glsl-lut [![unstable](http://badges.github.io/stability-badges/dist/unstable.svg)](http://github.com/badges/stability-badges)
 
 ![ABTest](http://i.imgur.com/IrgPRO2.png)
