@@ -1,8 +1,8 @@
 # glsl-lut [![unstable](http://badges.github.io/stability-badges/dist/unstable.svg)](http://github.com/badges/stability-badges)
 
-[![ABTest](http://i.imgur.com/IrgPRO2.png)](http://mattdesl.github.io/glsl-lut/example/miss_etikate.html)
+[![ABTest](http://i.imgur.com/QbSAX2h.png)](http://mattdesl.github.io/glsl-lut/example/demo.html)
 
-[Demo here](http://mattdesl.github.io/glsl-lut/example/miss_etikate.html)
+[Demo here](http://mattdesl.github.io/glsl-lut/example/demo.html)
 
 Allows you to use a lookup table to apply color transform in a shader. Original implementation from GPUImage, see [here](http://liovch.blogspot.ca/2012/07/add-instagram-like-effects-to-your-ios.html). For more details on the concept, see [here](http://http.developer.nvidia.com/GPUGems2/gpugems2_chapter24.html).
 

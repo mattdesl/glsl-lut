@@ -11,15 +11,10 @@ canvas.height = 512;
 document.body.style.margin = "0";
 var gl = createContext(canvas, render);
 var tex = createTex2d(gl, lena);
-var lookupTex;
+var lookupTex1 = getTex2D("lookup_selective_color.png");
+var lookupTex2 = getTex2D("lookup_miss_etikate.png");
+var lookupTex = lookupTex1;
 var lookupImage = new Image();
-lookupImage.src = "lookup_miss_etikate.png";
-
-lookupImage.onload = function() {
-    lookupTex = createTex2d(gl, lookupImage);
-    lookupTex.minFilter = lookupTex.magFilter = gl.LINEAR;
-};
-
 var shader = require("glslify/adapter.js")("\n#define GLSLIFY 1\n\nprecision mediump float;\nattribute vec2 position;\nvarying vec2 vUv;\nvoid main() {\n  vUv = (position + vec2(1.0)) / 2.0;\n  vUv.y = 1.0 - vUv.y;\n  gl_Position = vec4(position, 1.0, 1.0);\n}", "\n#define GLSLIFY 1\n\nprecision mediump float;\nuniform sampler2D uTexture;\nuniform sampler2D uLookup;\nuniform float stop;\nvarying vec2 vUv;\nvec4 a_x_lookup(in vec4 textureColor, in sampler2D lookupTable) {\n  \n  #ifndef LUT_NO_CLAMP\n  textureColor = clamp(textureColor, 0.0, 1.0);\n  #endif\n  mediump float blueColor = textureColor.b * 63.0;\n  mediump vec2 quad1;\n  quad1.y = floor(floor(blueColor) / 8.0);\n  quad1.x = floor(blueColor) - (quad1.y * 8.0);\n  mediump vec2 quad2;\n  quad2.y = floor(ceil(blueColor) / 8.0);\n  quad2.x = ceil(blueColor) - (quad2.y * 8.0);\n  highp vec2 texPos1;\n  texPos1.x = (quad1.x * 0.125) + 0.5 / 512.0 + ((0.125 - 1.0 / 512.0) * textureColor.r);\n  texPos1.y = (quad1.y * 0.125) + 0.5 / 512.0 + ((0.125 - 1.0 / 512.0) * textureColor.g);\n  #ifdef LUT_FLIP_Y\n  texPos1.y = 1.0 - texPos1.y;\n  #endif\n  highp vec2 texPos2;\n  texPos2.x = (quad2.x * 0.125) + 0.5 / 512.0 + ((0.125 - 1.0 / 512.0) * textureColor.r);\n  texPos2.y = (quad2.y * 0.125) + 0.5 / 512.0 + ((0.125 - 1.0 / 512.0) * textureColor.g);\n  #ifdef LUT_FLIP_Y\n  texPos2.y = 1.0 - texPos2.y;\n  #endif\n  lowp vec4 newColor1 = texture2D(lookupTable, texPos1);\n  lowp vec4 newColor2 = texture2D(lookupTable, texPos2);\n  lowp vec4 newColor = mix(newColor1, newColor2, fract(blueColor));\n  return newColor;\n}\nvoid main() {\n  vec4 color = texture2D(uTexture, vUv);\n  if(vUv.x > stop)\n    gl_FragColor = a_x_lookup(color, uLookup);\n  else\n    gl_FragColor = color;\n  \n}", [{"name":"uTexture","type":"sampler2D"},{"name":"uLookup","type":"sampler2D"},{"name":"stop","type":"float"}], [{"name":"position","type":"vec2"}])(gl);
 var mouseX = 0;
 
@@ -27,24 +22,44 @@ window.addEventListener("mousemove", function(ev) {
     mouseX = Math.max(0, Math.min(1, ev.pageX / canvas.width));
 });
 
+canvas.addEventListener("mousedown", function(ev) {
+    ev.preventDefault();
+    lookupTex = (lookupTex === lookupTex1 ? lookupTex2 : lookupTex1);
+});
+
 function render() {
-    if (!lookupTex)
+    if (!lookupTex.texture)
         return;
 
     shader.bind();
     shader.uniforms.stop = mouseX;
     shader.uniforms.uTexture = tex.bind(0);
-    shader.uniforms.uLookup = lookupTex.bind(1);
+    shader.uniforms.uLookup = lookupTex.texture.bind(1);
     triangle(gl);
 }
 
 document.body.appendChild(info());
 
+function getTex2D(path) {
+    var obj = {
+        image: new Image(),
+        texture: null
+    };
+
+    obj.image.onload = function() {
+        obj.texture = createTex2d(gl, obj.image);
+        obj.texture.minFilter = obj.texture.magFilter = gl.LINEAR;
+    };
+
+    obj.image.src = path;
+    return obj;
+}
+
 function info() {
     var lbl = document.createElement("div");
     lbl.style.font = "14px 'Helvetica', 'Arial', sans-serif";
     lbl.style.margin = "10px";
-    lbl.innerText = "move your mouse to see the color transform";
+    lbl.innerHTML = "move your mouse to see the color transform<br>click to swap lookup tables";
     return lbl;
 }
 },{"a-big-triangle":18,"gl-context":19,"gl-now":21,"gl-texture2d":46,"glslify":48,"glslify/adapter.js":47,"lena":54}],2:[function(require,module,exports){
