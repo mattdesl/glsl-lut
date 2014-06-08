@@ -1,6 +1,6 @@
 {
   "name": "glsl-lut",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "lookup table color transforms for glslify",
   "main": "index.js",
   "license": "MIT",
