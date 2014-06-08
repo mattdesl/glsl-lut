@@ -28,6 +28,18 @@ uniform sampler2D uLookup;
 	gl_FragColor = transform(original, uLookup);
 ```
 
+## inverted lookup
+
+Depending on your environment, the Y texture coordinate may need to be inverted during the lookup to get the correct color output. If your colours look messed up, this is most likely the case. Require the inverted function like so:
+
+```
+#pragma glslify: transform = require(glsl-lut/flipY)
+```
+
+## defines
+
+Requiring `glsl-lut/flipY` is the same as making a define for `LUT_FLIP_Y`. You can also define `LUT_NO_CLAMP` before requiring the function and the incoming texture color will not have a `clamp(c, 0.0, 1.0)` operation applied. This may be useful if you plan to take advantage of hardware texture wrapping. 
+
 ## License
 
 MIT, see [LICENSE.md](http://github.com/mattdesl/glsl-lut/blob/master/LICENSE.md) for details.

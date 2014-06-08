@@ -1,5 +1,3 @@
-
-
 vec4 lookup(in vec4 textureColor, in sampler2D lookupTable) {
     #ifndef LUT_NO_CLAMP
         textureColor = clamp(textureColor, 0.0, 1.0);
@@ -19,7 +17,7 @@ vec4 lookup(in vec4 textureColor, in sampler2D lookupTable) {
     texPos1.x = (quad1.x * 0.125) + 0.5/512.0 + ((0.125 - 1.0/512.0) * textureColor.r);
     texPos1.y = (quad1.y * 0.125) + 0.5/512.0 + ((0.125 - 1.0/512.0) * textureColor.g);
 
-    #ifdef LUT_INVERT
+    #ifdef LUT_FLIP_Y
         texPos1.y = 1.0-texPos1.y;
     #endif
 
@@ -27,7 +25,7 @@ vec4 lookup(in vec4 textureColor, in sampler2D lookupTable) {
     texPos2.x = (quad2.x * 0.125) + 0.5/512.0 + ((0.125 - 1.0/512.0) * textureColor.r);
     texPos2.y = (quad2.y * 0.125) + 0.5/512.0 + ((0.125 - 1.0/512.0) * textureColor.g);
 
-    #ifdef LUT_INVERT
+    #ifdef LUT_FLIP_Y
         texPos2.y = 1.0-texPos2.y;
     #endif
 
