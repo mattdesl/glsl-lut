@@ -19,10 +19,10 @@ var lookupTex = lookupTex1;
 //could also use ndarray get-pixels 
 var lookupImage = new Image();
 
-var shader = glslify({
-    vert: './index.vert'
-  , frag: './index.frag'
-})(gl)
+var shader = require('gl-shader')(gl,
+    glslify('./index.vert'),
+    glslify('./index.frag')
+)
 
 //handle mouse move
 var mouseX = 0;
