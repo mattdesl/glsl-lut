@@ -30,6 +30,8 @@ uniform sampler2D uLookup;
 	gl_FragColor = transform(original, uLookup);
 ```
 
+> ❗**Important**: Make sure to set `TEXTURE_MIN_FILTER` and `TEXTURE_MAG_FILTER` to `NEAREST` on the lookup table texture.
+
 ## Flipped Y Lookup
 
 Depending on your environment, the Y texture coordinate may need to be inverted during the lookup to get the correct color output. If your colours look messed up, this is most likely the case. Require the inverted function like so:
